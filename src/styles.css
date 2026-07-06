@@ -1074,7 +1074,8 @@ dialog::backdrop { background: oklch(0.2 0.02 264 / 0.55); backdrop-filter: blur
 .prompt-input { margin-bottom: 18px; }
 
 /* ── wizard ───────────────────────────────────────────────────────── */
-.wizard { width: min(720px, 94vw); max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; }
+.wizard { width: min(720px, 94vw); max-height: 90vh; overflow: hidden; }
+.wizard[open] { display: flex; flex-direction: column; }
 .wiz-head {
   display: flex;
   align-items: center;
