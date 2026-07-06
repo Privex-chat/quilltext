@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   Quilltext — design tokens (see DESIGN.md). Restrained palette: tinted
+   Quilltext - design tokens (see DESIGN.md). Restrained palette: tinted
    graphite neutrals + one ink-blue accent. Paper is the only bright surface.
 ═══════════════════════════════════════════════════════════════════ */
 :root {
@@ -1153,25 +1153,25 @@ dialog::backdrop { background: oklch(0.2 0.02 264 / 0.55); backdrop-filter: blur
   .project-menu { min-width: 240px; }
   .topbar-actions { gap: 2px; }
 
-  /* Help menu on mobile — compact. */
+  /* Help menu on mobile - compact. */
   .help-menu { min-width: 150px; }
 
-  /* Welcome dialog on mobile — full-width with less padding. */
+  /* Welcome dialog on mobile - full-width with less padding. */
   .welcome { max-width: 94vw; padding: 24px 20px 20px; }
   .welcome-actions { flex-direction: column; }
   .welcome-actions .btn { width: 100%; }
 
-  /* Guide on mobile — fill the viewport. */
+  /* Guide on mobile - fill the viewport. */
   .guide { width: 96vw; max-height: 94vh; border-radius: 12px; }
   .guide-head { padding: 14px 16px; }
   .guide-head-title { font-size: 15px; }
   .guide-section > summary { padding: 12px 16px; font-size: 12.5px; }
   .guide-sec-body { padding: 0 16px 16px; font-size: 13px; }
 
-  /* Editor placeholder on mobile — account for mobile tabs. */
+  /* Editor placeholder on mobile - account for mobile tabs. */
   .editor-placeholder { inset: 12px; font-size: 13px; }
 
-  /* Tutorial tooltip on mobile — smaller, safer margins. */
+  /* Tutorial tooltip on mobile - smaller, safer margins. */
   .tut-tip { width: min(300px, calc(100vw - 24px)); padding: 16px; }
   .tut-title { font-size: 14px; }
   .tut-body { font-size: 12.5px; }

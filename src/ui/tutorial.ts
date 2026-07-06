@@ -1,7 +1,7 @@
 /**
- * Interactive on-boarding tutorial — guided tour with spotlight + tooltip.
+ * Interactive on-boarding tutorial - guided tour with spotlight + tooltip.
  * Highlights UI elements one at a time with explanatory text.
- * Fully responsive — works on desktop, tablet, and mobile viewports.
+ * Fully responsive - works on desktop, tablet, and mobile viewports.
  */
 
 const STORAGE_KEY = 'quilltext.tutorial.done';

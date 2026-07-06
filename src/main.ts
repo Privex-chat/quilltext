@@ -26,7 +26,7 @@ function showWelcome(): void {
     <p class="welcome-body">
       Turn typed text into convincing handwritten pages. Choose your font, style the paper, add realistic imperfections, and export as PNG, JPEG, or PDF.
     </p>
-    <p class="welcome-hint">Everything runs in your browser — your text never leaves your machine.</p>
+    <p class="welcome-hint">Everything runs in your browser - your text never leaves your machine.</p>
     <div class="welcome-actions">
       <button class="btn btn-primary" id="welcome-tour">Take a Tour</button>
       <button class="btn btn-ghost" id="welcome-dismiss">Start writing</button>
@@ -74,7 +74,7 @@ async function boot(): Promise<void> {
   buildExportMenu(exportMenu);
   attachMenu(exportBtn, exportMenu);
 
-  // Help menu — tour, user guide, technical docs
+  // Help menu - tour, user guide, technical docs
   const helpBtn = document.getElementById('help-btn')!;
   const helpMenu = document.getElementById('help-menu')!;
   attachMenu(helpBtn, helpMenu);

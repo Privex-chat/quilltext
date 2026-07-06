@@ -60,7 +60,7 @@ export interface Settings {
   deskTilt: number; // 0..30 deg-ish perspective amount
   deskLight: number; // 0..1
 
-  // Page extras — punch holes
+  // Page extras - punch holes
   punchHoles: boolean;
   holesRight: boolean;
   holeCount: number; // 2 or 3
@@ -70,7 +70,7 @@ export interface Settings {
   holeSpread: number; // 0..1 gap between outermost holes (synced)
   holePositions: number[]; // vertical fraction per hole (unsynced)
 
-  // Page extras — brand mark / watermark
+  // Page extras - brand mark / watermark
   logo: boolean;
   logoMode: 'text' | 'image';
   logoText: string;
@@ -82,14 +82,14 @@ export interface Settings {
   logoRotation: number; // deg
   logoPosition: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'center';
 
-  // Page extras — cover page
+  // Page extras - cover page
   coverPage: boolean;
   coverTitle: string;
   coverFont: string; // '' = use the handwriting font
   coverFields: string[];
   coverColor: string;
 
-  // Page extras — signature footer
+  // Page extras - signature footer
   footer: boolean;
   footerRows: string[]; // '|' in a row splits it into two fields
   footerColor: string;

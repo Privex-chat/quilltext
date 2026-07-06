@@ -67,7 +67,7 @@ function realisticShadow(canvas: HTMLCanvasElement, s: Settings, rng: Rng, inten
   ctx.fillStyle = g1;
   ctx.fillRect(0, 0, w, h);
 
-  // 2) irregular soft blobs — object shadows falling on the page
+  // 2) irregular soft blobs - object shadows falling on the page
   const blobs = 1 + Math.floor(rng() * 2);
   for (let i = 0; i < blobs; i++) {
     const cx = rng() * w;
