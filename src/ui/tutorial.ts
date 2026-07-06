@@ -94,7 +94,7 @@ const STEPS: Step[] = [
 function scrollToSection(sectionIdx: number): void {
   const panel = document.getElementById('pane-style');
   if (!panel) return;
-  const details = panel.querySelectorAll<HTMLElement>('.ctl-group');
+  const details = panel.querySelectorAll<HTMLDetailsElement>('.ctl-group');
   const target = details[sectionIdx];
   if (target) {
     details.forEach((d) => (d.open = true));
