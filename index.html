@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1c1e2b" />
+    <meta
+      name="description"
+      content="Quilltext turns typed text into convincing handwritten pages. Ruled paper, real ink texture, crossed-out mistakes, your own handwriting. Free, open source, no signup."
+    />
+    <title>Quilltext — text to handwriting</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- Theme before first paint: no flash of wrong theme -->
+    <script>
+      (function () {
+        var t = localStorage.getItem('quilltext.theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Homemade+Apple&family=Caveat&family=Liu+Jian+Mao+Cao&family=Kalam&family=Patrick+Hand&family=Shadows+Into+Light&family=Indie+Flower&display=swap"
+    />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#editor">Skip to editor</a>
+
+    <header class="topbar">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path
+            d="M4 20c2-6 7-13 13-16l3 3C17 10 10 15 4 20Zm0 0c1.5-.3 3-.9 4-1.8"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+          />
+        </svg>
+        <span class="brand-name">Quilltext</span>
+        <span class="brand-beta">beta</span>
+      </div>
+
+      <div class="project-area">
+        <div class="crumb">
+          <button class="project-btn" id="project-btn" aria-haspopup="menu" aria-expanded="false">
+            <svg class="crumb-ic" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+              <path d="M1.5 4.5c0-.8.7-1.5 1.5-1.5h3l1.5 1.5H13c.8 0 1.5.7 1.5 1.5v6c0 .8-.7 1.5-1.5 1.5H3c-.8 0-1.5-.7-1.5-1.5v-8Z"
+                fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+            </svg>
+            <span id="project-name">Project</span>
+            <svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true">
+              <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </button>
+          <div class="project-menu" id="project-menu" role="menu" hidden></div>
+        </div>
+        <span class="crumb-sep" aria-hidden="true">/</span>
+        <div class="crumb">
+          <button class="project-btn page-btn" id="page-btn" aria-haspopup="menu" aria-expanded="false">
+            <span id="page-name">Page</span>
+            <svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true">
+              <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </button>
+          <div class="project-menu page-menu" id="page-menu" role="menu" hidden></div>
+        </div>
+        <span class="save-state" id="save-state" role="status"></span>
+      </div>
+
+      <div class="topbar-actions">
+        <div class="help-area">
+          <button class="icon-btn" id="help-btn" aria-label="Help" aria-haspopup="menu" aria-expanded="false">
+            <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true">
+              <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M8 8c0-1.1.9-2 2-2s2 .9 2 2c0 1.5-2 2-2 3.5V13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <circle cx="10" cy="16" r=".8" fill="currentColor"/>
+            </svg>
+          </button>
+          <div class="help-menu" id="help-menu" role="menu" hidden>
+            <button class="menu-item" data-help="tour">Take a Tour</button>
+            <button class="menu-item" data-help="guide">User Guide</button>
+            <button class="menu-item" data-help="tech">Technical Docs</button>
+          </div>
+        </div>
+        <button class="icon-btn" id="theme-btn" aria-label="Switch theme">
+          <svg class="ic-sun" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3 19 19M19 5l-1.7 1.7M6.7 17.3 5 19"
+              stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+          <svg class="ic-moon" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"
+              fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <a
+          class="icon-btn" id="github-link"
+          href="https://github.com/Privex-chat/quilltext/" target="_blank" rel="noopener noreferrer"
+          aria-label="Source on GitHub"
+        >
+          <svg viewBox="0 0 16 16" width="17" height="17" aria-hidden="true">
+            <path fill="currentColor"
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.42 7.42 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+          </svg>
+        </a>
+        <div class="export-area">
+          <button class="btn btn-primary" id="export-btn" aria-haspopup="menu" aria-expanded="false">
+            Export
+            <svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true">
+              <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </button>
+          <div class="export-menu" id="export-menu" role="menu" hidden></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="progress" id="progress" hidden>
+      <div class="progress-bar" id="progress-bar"></div>
+      <span class="progress-label" id="progress-label"></span>
+    </div>
+
+    <main class="app">
+      <section class="pane pane-write" id="pane-write" aria-label="Write">
+        <div class="ink-bar" id="ink-bar">
+          <span class="ink-bar-label">Selection ink</span>
+          <div class="ink-swatches" id="ink-swatches"></div>
+          <span class="ink-hint" id="ink-hint">Select text to recolor it</span>
+        </div>
+        <div class="editor-wrap">
+          <div
+            class="editor" id="editor" contenteditable="true"
+            role="textbox" aria-multiline="true" aria-label="Text to convert to handwriting"
+            spellcheck="true"
+          ></div>
+          <div class="editor-placeholder" aria-hidden="true">
+            <strong>Start typing here...</strong><br>
+            Your text becomes handwriting instantly.<br>
+            Try pasting a paragraph or essay.
+            <div class="eph-section">
+              <span class="eph-tip">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h0"/></svg>
+                Select text, then click a color swatch above to color it
+              </span>
+              <span class="eph-tip">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h0"/></svg>
+                <span class="eph-key">Ctrl+S</span> to export a PDF at any time
+              </span>
+              <span class="eph-tip">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 11h0"/></svg>
+                Use the <strong>Style</strong> panel to customize paper, font, and effects
+              </span>
+            </div>
+          </div>
+        </div>
+        <footer class="write-foot">
+          <span id="doc-stats" aria-live="polite"></span>
+          <button class="ghost-btn" id="clear-text-btn">Clear</button>
+        </footer>
+      </section>
+
+      <section class="pane pane-preview" id="pane-preview" aria-label="Preview">
+        <div class="well" id="well" tabindex="0">
+          <div class="pages" id="pages" aria-label="Handwritten page previews"></div>
+        </div>
+        <div class="zoom-bar" role="group" aria-label="Zoom">
+          <button class="zoom-btn" id="zoom-out" aria-label="Zoom out">−</button>
+          <button class="zoom-fit" id="zoom-fit">Fit</button>
+          <span class="zoom-level" id="zoom-level">100%</span>
+          <button class="zoom-btn" id="zoom-in" aria-label="Zoom in">+</button>
+        </div>
+      </section>
+
+      <aside class="pane pane-style" id="pane-style" aria-label="Style controls">
+        <div class="controls" id="controls"></div>
+      </aside>
+    </main>
+
+    <nav class="mobile-tabs" aria-label="Panes">
+      <button class="mtab" data-pane="pane-write" aria-pressed="false">Write</button>
+      <button class="mtab is-active" data-pane="pane-preview" aria-pressed="true">Preview</button>
+      <button class="mtab" data-pane="pane-style" aria-pressed="false">Style</button>
+    </nav>
+
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
