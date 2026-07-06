@@ -137,7 +137,8 @@ function phoneScan(source: HTMLCanvasElement, s: Settings, rng: Rng, pageIdx: nu
   const rotation = spread(rng) * Math.max(0, s.phoneRotation);
   const wb = phoneWhiteBalance(s, profile.make, rng);
   const isoLift = Math.max(0, Math.min(0.45, (profile.iso - 50) / 260));
-  const grain255 = clamp01(s.scanGrain) * (28 + isoLift * 24);
+  const effScale = Math.max(1, w / 794);
+  const grain255 = clamp01(s.scanGrain) * (28 + isoLift * 24) * Math.sqrt(effScale);
 
   const pad = Math.ceil(Math.max(w, h) * 0.02) + Math.round(w * 0.03);
   const out = document.createElement('canvas');
@@ -252,7 +253,8 @@ function compressionArtifacts(canvas: HTMLCanvasElement, amount: number): void {
   if (a <= 0.01) return;
   const ctx = canvas.getContext('2d')!;
   const tmp = document.createElement('canvas');
-  const ratio = 1 - a * 0.34;
+  const effScale = Math.max(1, canvas.width / 794);
+  const ratio = Math.max(0.25, 1 - a * 0.34 * Math.sqrt(effScale));
   tmp.width = Math.max(80, Math.round(canvas.width * ratio));
   tmp.height = Math.max(80, Math.round(canvas.height * ratio));
   const tctx = tmp.getContext('2d')!;
