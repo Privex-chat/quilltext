@@ -38,7 +38,10 @@ function showWelcome(): void {
     dlg.close();
     setTimeout(() => startTutorial(true), 300);
   });
-  dlg.querySelector('#welcome-dismiss')!.addEventListener('click', () => dlg.close());
+  dlg.querySelector('#welcome-dismiss')!.addEventListener('click', () => {
+    localStorage.setItem('quilltext.tutorial.done', 'done');
+    dlg.close();
+  });
   dlg.addEventListener('close', () => {
     dlg.remove();
     const btn = document.getElementById('help-btn');
